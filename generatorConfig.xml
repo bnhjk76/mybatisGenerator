@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="testTables" targetRuntime="org.mybatis.generator.plugins.table.TkMyBatis3Impl">
+		<!-- JavaBean 实现 序列化 接口 -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+		</plugin>
+		<!-- genenat entity时,生成toString -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <!-- 自定义物理分页  可生成支持Mysql数据的limit  不支持Oracle -->
+        <plugin type="org.mybatis.generator.plugins.page.PaginationPlugin" />
+        <!-- 自定义查询指定字段  -->
+        <plugin type="org.mybatis.generator.plugins.field.FieldsPlugin" />
+        <!-- 开启支持内存分页   可生成 支持内存分布的方法及参数  
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+        -->
+        <!-- generate entity时，生成hashcode和equals方法
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		 -->
+		<!-- 此处是将Example改名为Criteria 当然 想改成什么都行~    -->      
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">  
+	        <property name="searchString" value="Example$" />
+	        <!-- 替换后
+	        <property name="replaceString" value="Criteria" />  
+	         -->
+	        <property name="replaceString" value="Query" />
+        </plugin>  
+		<!-- 此处是将UserMapper.xml改名为UserDao.xml 当然 想改成什么都行~ -->        
+        <plugin type="org.mybatis.generator.plugins.rename.RenameSqlMapperPlugin">  
+	        <property name="searchString" value="Mapper" />
+	        <property name="replaceString" value="Dao" />
+        </plugin>  
+         
+		<!-- 此处是将UserMapper改名为UserDao 接口 当然 想改成什么都行~  -->        
+        <plugin type="org.mybatis.generator.plugins.rename.RenameJavaMapperPlugin">  
+	        <property name="searchString" value="Mapper$" />
+	        <property name="replaceString" value="Dao" />
+        </plugin>  
+        
+ 
+		
+		<commentGenerator type="org.mybatis.generator.plugins.comment.MyCommentGenerator">
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 
+			<property name="suppressAllComments" value="true" />
+			-->
+		</commentGenerator>
+		
+		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/exam" userId="root"
+			password="1234">
+		</jdbcConnection>
+		<!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg" 
+			userId="yycg"
+			password="yycg">
+		</jdbcConnection> -->
+
+		<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和 
+			NUMERIC 类型解析为java.math.BigDecimal -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+
+		<!-- targetProject:生成PO类的位置 -->
+		<javaModelGenerator targetPackage="cn.ssm.core.bean"
+			targetProject=".\src">
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
+			<property name="enableSubPackages" value="false" />
+			<!-- 从数据库返回的值被清理前后的空格 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+        <!-- targetProject:mapper映射文件生成的位置 -->
+		<sqlMapGenerator targetPackage="cn.ssm.core.dao"
+			targetProject=".\src">
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+		<!-- targetPackage：mapper接口生成的位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="cn.ssm.core.dao"
+			targetProject=".\src">
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+		
+		<!-- 指定数据库表 -->
+		<!-- 用户模块表  -->
+		<!--<table schema="" tableName="bbs_buyer" domainObjectName="user.Buyer"/>-->
+		<!---->
+		<!--&lt;!&ndash; 商品模块表 &ndash;&gt;-->
+		<!--<table schema="" tableName="bbs_product" domainObjectName="product.Product">-->
+			<!--&lt;!&ndash; 商品介绍 大字段映射 &ndash;&gt;-->
+			<!--<columnOverride column="description" javaType="String" jdbcType="VARCHAR" />-->
+			<!--&lt;!&ndash; 包装清单 大字段映射 &ndash;&gt;-->
+			<!--<columnOverride column="package_list" javaType="String" jdbcType="VARCHAR" />-->
+			<!--&lt;!&ndash; 商品图片 大字段映射 &ndash;&gt;-->
+			<!--<columnOverride column="img_url" javaType="String" jdbcType="VARCHAR" />-->
+		<!--</table>-->
+		<!--<table schema="" tableName="bbs_brand" domainObjectName="product.Brand"/>-->
+		<!--<table schema="" tableName="bbs_Color" domainObjectName="product.Color"/>-->
+		<!--<table schema="" tableName="bbs_sku" domainObjectName="product.Sku"/>-->
+		<!---->
+		<!--&lt;!&ndash; 订单模块表 &ndash;&gt;-->
+		<!--<table schema="" tableName="bbs_order" domainObjectName="order.Order">-->
+			<!--&lt;!&ndash; 支付方式 0:到付 1:在线 2:邮局 3:公司转帐 &ndash;&gt;-->
+			<!--<columnOverride column="payment_way" javaType="Integer"/>-->
+			<!--&lt;!&ndash; 货到付款方式.1现金,2POS刷卡 &ndash;&gt;-->
+			<!--<columnOverride column="payment_cash" javaType="Integer" />-->
+			<!--&lt;!&ndash; 送货时间 &ndash;&gt;-->
+			<!--<columnOverride column="delivery" javaType="Integer"/>-->
+			<!--&lt;!&ndash; 支付状态 :0到付1待付款,2已付款,3待退款,4退款成功,5退款失败 &ndash;&gt;-->
+			<!--<columnOverride column="is_paiy" javaType="Integer"/>-->
+			<!--&lt;!&ndash; 订单状态 0:提交订单 1:仓库配货 2:商品出库 3:等待收货 4:完成 5待退货 6已退货 &ndash;&gt;-->
+			<!--<columnOverride column="state" javaType="Integer"/>-->
+			<!--&lt;!&ndash; 订单状态 默认Boolean &ndash;&gt;-->
+			<!--<columnOverride column="order_state" javaType="Integer"/>-->
+		<!--</table>-->
+		<!--<table schema="" tableName="bbs_detail" domainObjectName="order.Detail"/>-->
+		
+		<!-- 指定数据库所有表  
+		<table schema="" tableName="%"/>
+		-->
+		
+		<!-- 有些表的字段需要指定java类型
+		 <table schema="" tableName="">
+			<columnOverride column="" javaType="" />
+		</table> -->
+		<!--<table schema="" tableName="dept" domainObjectName="dept.Department" />-->
+		<!--<table schema="" tableName="emp" domainObjectName="emp.Employee" />-->
+		<!--<table schema="" tableName="salgrade" domainObjectName="sal.Salgrade"/>-->
+		<table schema="" tableName="%_emp" domainObjectName="emp." mapperName="emp.{0}" />
+		<table schema="" tableName="dept" domainObjectName="dept." mapperName="dept.{0}" />
+	</context>
+
+
+
+</generatorConfiguration>
